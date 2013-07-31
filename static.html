@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular vs Backbone - Static</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+</head>
+    <body>
+        
+        <!-- Container /-->
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Jimmy's Bike Shop</h1>
+                <p>Welcome to Jimmy's Bike Shop, a demo application to show the different workings 
+                    between <a href="http://angularjs.org/">AngularJS</a> and <a href="http://backbonejs.org"> BackBoneJS</a>.</p>
+            </div>
+            <div class="col-lg-8">
+                <h2>Products</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Number of items in stock</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Schwinn Women's Community 700c Hybrid Bicycle</td>
+                            <td>€ 339,99 </td>
+                            <td class="text-center">5</td>
+                            <td><a href="#">Add to cart</a></td>
+                        </tr>
+                        <tr>
+                            <td>Mongoose Armor 20-Inch Freestyle Bicycle</td>
+                            <td>€ 169,99 </td>
+                            <td class="text-center">10</td>
+                            <td><a href="#">Add to cart</a></td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Schwinn Men's Axios CX 700c Drop Bar Road Bicycle, <br /> Red, 18-Inch Frame</td>
+                            <td>€ 531,50 </td>
+                            <td class="text-center">2</td>
+                            <td><a href="#">Add to cart</a></td>
+                        </tr>
+                        <tr class="danger">
+                            <td>Mongoose Stasis Comp 26-Inch Full Suspension Mountain Bicycle</td>
+                            <td>€ 299,99 </td>
+                            <td class="text-center">0</td>
+                            <td></td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Powerlite Brawler 20-Inch Freestyle Bicycle, Neon Green</td>
+                            <td>€ 156,71</td>
+                            <td class="text-center">1</td>
+                            <td><a href="#" >Add to cart</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <h2>My shopping cart</h2>
+                <form action="#" method="POST">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Mongoose Stasis Comp 26-Inch Full Suspension Mountain Bicycle</h4>
+                            <p class="list-group-item-text">€ 299,99</p>
+                            <p class="list-group-item-text"><a href="#">Remove from cart</a></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Powerlite Brawler 20-Inch Freestyle Bicycle, Neon Green</h4>
+                            <p class="list-group-item-text">€ 156,71</p>
+                            <p class="list-group-item-text"><a href="#">Remove from cart</a></p>
+                        </li>
+                    </ul>
+                    <p>
+                        <input type="text" class="form-control" placeholder="Delivery location" />
+                    </p>
+                    <div>
+                        <button class="btn btn-primary">Buy articles</button>
+                        <button class="btn btn-danger">Clear cart</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Scripts /-->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    </body>
+</html>
