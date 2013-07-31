@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AngularVsBackbone", ".", "{AF2696B0-EBF1-4B0A-A98E-EFD423F0704A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/Angularjs"
+		Debug.AspNetCompiler.PhysicalPath = "..\AngularVsBackbone\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Angularjs\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Angularjs"
+		Release.AspNetCompiler.PhysicalPath = "..\AngularVsBackbone\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Angularjs\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "65409"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartDemo.WebApi", "WebApi\ShoppingCartDemo.WebApi\ShoppingCartDemo.WebApi.csproj", "{275375D1-2FCE-4F58-BBCB-3FBC686AFE98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF2696B0-EBF1-4B0A-A98E-EFD423F0704A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2696B0-EBF1-4B0A-A98E-EFD423F0704A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2696B0-EBF1-4B0A-A98E-EFD423F0704A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2696B0-EBF1-4B0A-A98E-EFD423F0704A}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{275375D1-2FCE-4F58-BBCB-3FBC686AFE98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275375D1-2FCE-4F58-BBCB-3FBC686AFE98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275375D1-2FCE-4F58-BBCB-3FBC686AFE98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275375D1-2FCE-4F58-BBCB-3FBC686AFE98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
