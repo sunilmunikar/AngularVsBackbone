@@ -1,4 +1,5 @@
-﻿using ShoppingCartDemo.Model;
+﻿using System.Net;
+using ShoppingCartDemo.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,18 @@ namespace ShoppingCart.WebApi.SelfHost
             return Cart;
         }
 
-        public HttpResponseMessage Post(Product product)
+        public HttpResponseMessage Post(int productId)
         {
+            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (product == null)
+                throw  new HttpResponseException(HttpStatusCode.NotFound);
+
             Cart.AddProduct(product);
+            if (product.ItemsInStock == 0)
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Item is no longer in stock"});
+
+            product.ItemsInStock -= 1;
             return this.Request.CreateResponse();
         }
     }

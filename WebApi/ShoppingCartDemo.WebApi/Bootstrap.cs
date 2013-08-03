@@ -16,11 +16,8 @@ namespace ShoppingCartDemo.WebApi
                 routeTemplate: "{controller}/{id}",
                 defaults: new
                 {
-                    controller = "Shopping",
                     id = RouteParameter.Optional
                 });
-
-            config.Formatters.XmlFormatter.UseXmlSerializer = true;
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
