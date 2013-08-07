@@ -35,14 +35,14 @@ namespace ShoppingCartDemo.WebApi
                             },
                         new Product
                             {
-                                Id = 3,
+                                Id = 4,
                                 Name = "Mongoose Stasis Comp 26-Inch Full Suspension Mountain Bicycle",
                                 Price = 299.99M,
                                 ItemsInStock = 0
                             },
                         new Product
                             {
-                                Id = 3,
+                                Id = 5,
                                 Name = "Powerlite Brawler 20-Inch Freestyle Bicycle, Neon Green",
                                 Price = 156.71M,
                                 ItemsInStock = 1

@@ -1,14 +1,10 @@
 ﻿using System.Net;
 using ShoppingCartDemo.Model;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Web.Http;
-using ShoppingCartDemo.WebApi;
 
-namespace ShoppingCart.WebApi.SelfHost
+namespace ShoppingCartDemo.WebApi
 {
     public class ShoppingCartController : ApiController
     {
@@ -17,13 +13,6 @@ namespace ShoppingCart.WebApi.SelfHost
         public ShoppingCartController()
         {
             Cart = new ShoppingBasket();
-            Cart.DeliveryAddress = "Highway to hell";
-            Cart.IsFinish = false;
-            Cart.AddProduct(new Product
-            {
-                Name = "A fake product created during consturction of the webapi call",
-                Price = 99.99M
-            });
         }
 
         public ShoppingBasket GetShoppingBasket()
