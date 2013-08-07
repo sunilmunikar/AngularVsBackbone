@@ -4,10 +4,9 @@
         "jquery": "//code.jquery.com/jquery"
     },
     shim: {
-        underscore: {
-            exports: '_'
-        },
+        underscore: { exports: '_' },
         bootstrap: { deps: ['jquery'] },
+        handlebars: { exports: 'Handlebars'},
         backbone: {
             deps: [
 				'underscore',

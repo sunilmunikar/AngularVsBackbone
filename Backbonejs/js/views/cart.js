@@ -2,7 +2,9 @@
         "jquery",
         "underscore",
         "backbone",
-], function ($, _, backbone) {
+        "handlebars",
+        "text!templates/cart.html"
+], function ($, _, backbone, handlebars, cartTemplate) {
     "use strict";
 
     var masterView = backbone.View.extend({
@@ -11,7 +13,7 @@
         },
 
         render: function () {
-            this.$el.html("<h2>Cart</h2>");
+            this.$el.html(handlebars.compile(cartTemplate));
             return this;
         },
 
