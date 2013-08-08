@@ -11,6 +11,8 @@ namespace ShoppingCartDemo.WebApi
     {
         public void Configure(HttpConfiguration config)
         {
+            config.EnableCors();
+
             config.Routes.MapHttpRoute(
                 name: "API Default",
                 routeTemplate: "{controller}/{id}",

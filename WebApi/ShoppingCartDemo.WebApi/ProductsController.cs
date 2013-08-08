@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using ShoppingCartDemo.Model;
 
 namespace ShoppingCartDemo.WebApi
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProductsController : ApiController
     {
         public IEnumerable<Product> GetAllProducts()

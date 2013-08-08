@@ -15,14 +15,12 @@ namespace ShoppingCart.WebApi.SelfHost
 
         public ShoppingCartController()
         {
-            Cart = new ShoppingBasket();
-            Cart.DeliveryAddress = "Highway to hell";
-            Cart.IsFinish = false;
-            Cart.AddProduct(new Product
-            {
-                Name = "A fake product created during consturction of the webapi call",
-                Price = 99.99M
-            });
+            Cart = new ShoppingBasket {DeliveryAddress = "Highway to hell", IsFinish = false};
+            Cart.AddItem(new BasketItem
+                {
+                    ProductId = 2,
+                    Quantity = 1
+                });
         }
 
         public ShoppingBasket GetShoppingBasket()
@@ -30,19 +28,25 @@ namespace ShoppingCart.WebApi.SelfHost
             return Cart;
         }
 
-        public HttpResponseMessage Post(int productId)
+        public HttpResponseMessage Post(BasketItem item)
         {
-            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == productId);
+            if (Cart.Items.Any(i => i.ProductId == item.ProductId))
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict,
+                                                   "Product " + item.ProductId +
+                                                   " already in cart, please update quantity to increase number of items");
+
+            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == item.ProductId);
 
             if (product == null)
-                throw  new HttpResponseException(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "No product found with id " + item.ProductId);
 
-            Cart.AddProduct(product);
             if (product.ItemsInStock == 0)
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Item is no longer in stock"});
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Item is no longer in stock");
 
-            product.ItemsInStock -= 1;
-            return this.Request.CreateResponse();
+            Cart.AddItem(item);
+            product.ItemsInStock -= item.Quantity;
+
+            return Request.CreateResponse();
         }
     }
 }

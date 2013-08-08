@@ -4,18 +4,24 @@ namespace ShoppingCartDemo.Model
 {
     public class ShoppingBasket
     {
-        public IList<Product> Products { get; set; }
+        private readonly List<BasketItem> _items;
+
+        public IEnumerable<BasketItem> Items
+        {
+            get { return _items; }
+        }
+
         public bool IsFinish { get; set; }
         public string DeliveryAddress { get; set; }
 
         public ShoppingBasket()
         {
-            Products = new List<Product>();
+            _items = new List<BasketItem>();
         }
 
-        public void AddProduct(Product product)
+        public void AddItem(BasketItem product)
         {
-            Products.Add(product);
+            _items.Add(product);
         }
     }
 }

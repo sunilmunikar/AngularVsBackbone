@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Web;
+using System.Web.Http.Cors;
 using ShoppingCartDemo.Model;
 using System.Linq;
 using System.Net.Http;
@@ -6,6 +8,7 @@ using System.Web.Http;
 
 namespace ShoppingCartDemo.WebApi
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ShoppingCartController : ApiController
     {
         public ShoppingBasket Cart { get; set; }
@@ -20,19 +23,25 @@ namespace ShoppingCartDemo.WebApi
             return Cart;
         }
 
-        public HttpResponseMessage Post(int productId)
+        public HttpResponseMessage Post(BasketItem item)
         {
-            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == productId);
+            if (Cart.Items.Any(i => i.ProductId == item.ProductId))
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict,
+                                                   "Product " + item.ProductId +
+                                                   " already in cart, please update quantity to increase number of items");
+
+            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == item.ProductId);
 
             if (product == null)
-                throw  new HttpResponseException(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "No product found with id " + item.ProductId);
 
-            Cart.AddProduct(product);
             if (product.ItemsInStock == 0)
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Item is no longer in stock"});
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Item is no longer in stock");
 
-            product.ItemsInStock -= 1;
-            return this.Request.CreateResponse();
+            Cart.AddItem(item);
+            product.ItemsInStock -= item.Quantity;
+
+            return Request.CreateResponse();
         }
     }
 }
