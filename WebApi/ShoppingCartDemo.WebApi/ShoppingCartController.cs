@@ -11,11 +11,12 @@ namespace ShoppingCartDemo.WebApi
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ShoppingCartController : ApiController
     {
-        public ShoppingBasket Cart { get; set; }
+        public static ShoppingBasket Cart { get; set; }
 
         public ShoppingCartController()
         {
-            Cart = new ShoppingBasket();
+            if (Cart == null)
+                Cart = new ShoppingBasket();
         }
 
         public ShoppingBasket GetShoppingBasket()

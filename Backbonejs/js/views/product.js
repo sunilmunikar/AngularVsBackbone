@@ -3,14 +3,20 @@
         "underscore",
         "backbone",
         "models/product",
+        "models/cart",
         "text!templates/product.html"
-], function ($, _, backbone, product, template) {
+], function ($, _, backbone, product, cart, template) {
     "use strict";
 
     var masterView = backbone.View.extend({
         template: _.template(template),
         model: product,
         tagName: "tr",
+        
+        events: {
+            "click .cart-add-button": "addToCart"
+        },
+
         initialize: function () {
 
         },
@@ -25,7 +31,10 @@
 
             return this;
         },
-
+        
+        addToCart: function() {
+            cart.addProduct(this.model);
+        }
     });
 
     return masterView;

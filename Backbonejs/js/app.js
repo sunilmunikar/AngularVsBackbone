@@ -14,13 +14,18 @@
             ],
             exports: 'Backbone'
         },
+        "relational": {
+            deps: ["backbone"],
+            exports: 'Backbone'
+        }
     }
 });
 
 require([
     "views/master",
-    "bootstrap"
-], function (masterView, bootstrap) {
+    "bootstrap",
+    "relational"
+], function (masterView, bootstrap, relational) {
     // this is where all the site code should begin
     new masterView().render();
 });

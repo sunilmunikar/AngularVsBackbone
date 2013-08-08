@@ -4,7 +4,7 @@
         'use strict';
 
         var productModel = backbone.Model.extend({
-            idAttribute: "Id"
+
         });
 
         return productModel;

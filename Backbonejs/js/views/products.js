@@ -4,8 +4,9 @@
         "backbone",
         "text!templates/products.html",
         "collections/products",
-        "views/product"
-], function ($, _, backbone, productsTemplate, products, productView) {
+        "views/product",
+        "models/cart"
+], function ($, _, backbone, productsTemplate, products, productView, cart) {
     "use strict";
 
     var masterView = backbone.View.extend({
