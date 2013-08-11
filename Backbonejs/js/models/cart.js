@@ -2,9 +2,10 @@
         "underscore",
         "relational",
         "models/cartItem",
-        "collections/cartItems"
+        "collections/cartItems",
+        "notifier"
     ],
-    function (_, backbone, cartItem, cartProductCollection) {
+    function (_, backbone, cartItem, cartProductCollection, notifier) {
         "use strict";
 
         var cartModel = backbone.RelationalModel.extend({
@@ -28,14 +29,29 @@
                     existing = this.get("items").findWhere({ productId: product.id });
                 }
 
+                var onSuccess = _.partial(this.addOnSuccess, product);
+
                 if (!existing) {
                     var item = new cartItem({ productId: product.id, quantity: 1 });
-                    item.save();
+                    item.save(null, { success: onSuccess, error: this.addOnError });
                 } else {
                     existing.set("quantity", existing.get("quantity") + 1);
-                    existing.save();
+                    existing.save(null, { success: onSuccess, error: this.addOnError });
                 }
-                
+            },
+            
+            addOnSuccess: function (product, model) {
+                product.fetch();
+                notifier.success(product.get("name") + " added to the cart", this);
+            },
+            
+            addOnError: function (model, xhr, options) {
+
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    notifier.error(xhr.responseJSON.message, this);
+                } else {
+                    notifier.error("An error has occured while adding the product to the cart");
+                }
             }
         });
 
