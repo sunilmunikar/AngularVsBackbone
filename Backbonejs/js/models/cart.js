@@ -42,15 +42,15 @@
             
             addOnSuccess: function (product, model) {
                 product.fetch();
-                notifier.success(product.get("name") + " added to the cart", this);
+                notifier.success(product.get("name") + " added to the cart", model.get("productId"));
             },
             
             addOnError: function (model, xhr, options) {
 
                 if (xhr.responseJSON && xhr.responseJSON.message) {
-                    notifier.error(xhr.responseJSON.message, this);
+                    notifier.error(xhr.responseJSON.message, model.get("productId"));
                 } else {
-                    notifier.error("An error has occured while adding the product to the cart");
+                    notifier.error("An error has occured while adding the product to the cart", model.get("productId"));
                 }
             }
         });
