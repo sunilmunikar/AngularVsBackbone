@@ -14,8 +14,6 @@
         
         initialize: function () {
             this.listenTo(products, "add", this.addProduct);
-
-            products.fetch();
         },
 
         render: function () {

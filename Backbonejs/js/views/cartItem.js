@@ -17,10 +17,25 @@
         //},
 
         initialize: function () {
-            this.model = products.get(this.options.productId);
+            this.setModel();
+        },
+        
+        setModel : function() {
+            if (products.length == 0) {
+                products.once("add", function () {
+                    this.setModel();
+                    this.render();
+                });
+            } else {
+                this.model = products.get(this.options.productId);
+            }
         },
 
         render: function () {
+            if (!this.model) {
+                return this;
+            }
+
             var item = this.model.toJSON();
 
             this.$el

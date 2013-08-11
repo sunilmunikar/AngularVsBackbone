@@ -2,9 +2,10 @@
         "jquery",
         "underscore",
         "backbone",
+        "collections/products",
         "views/products",
         "views/cart"
-], function ($, _, backbone, productsView, cartView) {
+], function ($, _, backbone, products, productsView, cartView) {
     "use strict";
 
     var masterView = backbone.View.extend({
@@ -13,6 +14,9 @@
 
         initialize: function () {
             this.productsView = new productsView();
+            
+            products.fetch();
+
             this.cartView = new cartView();
         },
 
