@@ -1,19 +1,29 @@
-'use strict';
+/// <reference path="../lib/angular/angular.js" />
+(function () {
 
-angular.module('shoppingCartApp', [
-    'shoppingCartApp.filters',
-    'shoppingCartApp.services',
-    'shoppingCartApp.directives',
-    'shoppingCartApp.controllers'
-    ])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view1', {
-            templateUrl: 'partials/partial1.html',
-            controller: 'MyCtrl1'
-        });
-        $routeProvider.when('/view2', {
-            templateUrl: 'partials/partial2.html',
-            controller: 'MyCtrl2'
-        });
-        $routeProvider.otherwise({ redirectTo: '/view1' });
+    'use strict';
+
+    angular.module('shoppingCartApp',
+        [
+        'shoppingCartApp.filters',
+        'shoppingCartApp.services',
+        'shoppingCartApp.directives',
+        'shoppingCartApp.controllers'
+        ])
+        .config(['$routeProvider', function ($routeProvider) {
+            $routeProvider.when('/view1', {
+                templateUrl: 'partials/partial1.html',
+                controller: 'ProductList'
+            });
+            $routeProvider.when('/ShoppingBasket', {
+                templateUrl: 'partials/shoppingBasket.html',
+                controller: 'ShoppingBasket'
+            });
+            $routeProvider.otherwise({ redirectTo: '/index.html' });
+        }]);
+
+    angular.module('shoppingCartApp')
+    .controller('AppCtrl', ['$scope', function ($scope) {
+        $scope.config = { debug: true }
     }]);
+}());
