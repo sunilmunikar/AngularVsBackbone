@@ -12,11 +12,13 @@
             </tr>
         </thead>
         <tbody ng:repeat="item in data.products">
-            <tr>
+            <tr ng-class="defineItemColor(item)">
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td class="text-center">{{item.itemsInStock}}</td>
-                <td><a href="#">Add to cart</a></td>
+                <td>
+                    <a href="#" ng-click="AddToCart(item); $event.preventDefault()" ng-show="item.itemsInStock > 0">Add to cart</a>
+                </td>
             </tr>
         </tbody>
     </table>

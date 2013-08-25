@@ -8,22 +8,27 @@
         'shoppingCartApp.filters',
         'shoppingCartApp.services',
         'shoppingCartApp.directives',
-        'shoppingCartApp.controllers'
+        'shoppingCartApp.controllers',
+        'services.httpRequestTracker'
         ])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/view1', {
                 templateUrl: 'partials/partial1.html',
-                controller: 'ProductList'
+                controller: 'ProductListController'
             });
             $routeProvider.when('/ShoppingBasket', {
                 templateUrl: 'partials/shoppingBasket.html',
-                controller: 'ShoppingBasket'
+                controller: 'ShoppingBasketController'
             });
             $routeProvider.otherwise({ redirectTo: '/index.html' });
         }]);
 
     angular.module('shoppingCartApp')
-    .controller('AppCtrl', ['$scope', function ($scope) {
-        $scope.config = { debug: true }
-    }]);
+    .controller('AppCtrl',
+        ['$scope', 'httpRequestTracker', function ($scope, httpRequestTracker) {
+            $scope.config = { debug: true }
+            $scope.hasPendingRequest = function () {
+                return httpRequestTracker.hasPendingRequest();
+            }
+        }]);
 }());

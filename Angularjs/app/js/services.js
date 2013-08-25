@@ -1,3 +1,4 @@
+/// <reference path="../lib/angular/angular.js" />
 'use strict';
 
 /* Services */
@@ -33,8 +34,8 @@ angular.module('shoppingCartApp.services', [])
             getProducts: _getProducts
         };
     }])
-    .factory('MyShoppingCart',
-    ['$http', '$q', function ($http, $q) {
+    .factory('MyShoppingBasket',
+    ['$http', '$q', 'baseUrl', function ($http, $q, baseUrl) {
 
         var _productsInCart = [{ id: 1, name: "test" }],
             _getProductsInMyCart = function () {
@@ -43,15 +44,16 @@ angular.module('shoppingCartApp.services', [])
             _addItemToShoppingCart = function (newItem) {
                 var deferred = $q.defer();
 
-                $http.post(baseUrl + "ShoppingCart")
+                $http.post(baseUrl + "ShoppingCart", {ProductId: newItem.id, Quantity:1})
                 .then(function (result) {
                     // success
-                    var newlyAddedItem = result.data;
-                    _productsInCart.splice(0, 0, newlyAddedItem);
-                    deferred.resolve(newlyAddedItem);
+                    _productsInCart.splice(0, 0, newItem);
+                    deferred.resolve(newItem);
                 },
-                function () {
+                function (data, status) {
                     //error
+                    console.log(data);
+                    console.log(status);
                     deferred.reject();
                 });
                 return deferred.promise;

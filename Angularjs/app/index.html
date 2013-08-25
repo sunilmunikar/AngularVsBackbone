@@ -8,12 +8,6 @@
 </head>
 <body ng-controller="AppCtrl">
     <div class="container">
-        <!--        <div class="progress progress-striped active" data-ng-show="true">
-            <div class="bar" style="width: 100%;"></div>
-        </div>-->
-        <div class="progress">
-            <div class="bar" style="width: 60%;"></div>
-        </div>
         <div class="jumbotron">
             <h1>Jimmy's Bike Shop</h1>
             <p>
@@ -21,12 +15,13 @@
                     between <a href="http://angularjs.org/">AngularJS</a> and <a href="http://backbonejs.org">BackBoneJS</a>.
             </p>
         </div>
+        <img src="img/spinner.gif" ng-show="hasPendingRequests()">
 
-        <div ng-include="'partials/productList.html'" ng-controller="ProductList"></div>
-        <div ng-include="'partials/shoppingBasket.html'" ng-controller="ShoppingBasket"></div>
+        <div ng-include="'partials/productList.html'" ng-controller="ProductListController"></div>
+        <div ng-include="'partials/shoppingBasket.html'" ng-controller="ShoppingBasketController"></div>
 
         <!--<div ng-view></div>-->
-        <div>app version(Development): v<span data-app-version=""></span></div>
+        <!--<div>app version(Development): v<span data-app-version=""></span></div>-->
 
     </div>
 
@@ -43,5 +38,6 @@
     <script src="js/controllers.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
+    <script src="js/common/services/httpRequestTracker.js"></script>
 </body>
 </html>

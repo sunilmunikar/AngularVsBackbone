@@ -1,11 +1,10 @@
 (function () {
     'use strict';
     angular.module('shoppingCartApp.controllers', [])
-        .controller('ProductList',
-            ['$scope', 'Products', 'MyShoppingCart',
-                function ($scope, Products, MyShoppingCart) {
+        .controller('ProductListController',
+            ['$scope', 'Products', 'MyShoppingBasket',
+                function ($scope, Products, MyShoppingBasket) {
                     $scope.data = Products;
-                    $scope.isBusy = true;
 
                     Products.getProducts()
                     .then(function () {
@@ -14,14 +13,12 @@
                     function () {
                         //error
                         alert("could not load topics");
-                    })
-                    .then(function () {
-                        $scope.isBusy = false;
                     });
 
                     $scope.itemToAdd = {};
-                    $scope.AddToCart = function () {
-                        MyShoppingCart.addItemToShoppingCart($scope.itemToAdd)
+
+                    $scope.AddToCart = function (product) {
+                        MyShoppingBasket.addItemToShoppingCart(product)
                         .then(function () {
                             //success
                         },
@@ -29,10 +26,18 @@
                             //error
                         });
                     };
+                    $scope.defineItemColor = function (product) {
+                        if (product.itemsInStock == 0) {
+                            return "danger";
+                        }
+                        if (product.itemsInStock <= 2) {
+                            return "warning";
+                        }
+                    }
                 }])
-      .controller('ShoppingBasket',
-        ['$scope', 'MyShoppingCart',
-          function ($scope, MyShoppingCart) {
-              $scope.data = MyShoppingCart;
+      .controller('ShoppingBasketController',
+        ['$scope', 'MyShoppingBasket',
+          function ($scope, MyShoppingBasket) {
+              $scope.data = MyShoppingBasket;
           }]);
 })();
