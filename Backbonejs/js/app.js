@@ -1,12 +1,18 @@
 ﻿requirejs.config({
-    "baseUrl": "js",
-    "paths": {
-        "jquery": "//code.jquery.com/jquery"
+    baseUrl: "js",
+    paths: {
+        jquery: "//code.jquery.com/jquery",
+        backbone: "lib/backbone",
+        bootstrap: "lib/bootstrap",
+        text: "lib/text",
+        underscore: "lib/underscore",
+        handlebars: "lib/handlebars",
+        relational: "lib/relational",
     },
     shim: {
         underscore: { exports: '_' },
         bootstrap: { deps: ['jquery'] },
-        handlebars: { exports: 'Handlebars'},
+        handlebars: { exports: 'Handlebars' },
         backbone: {
             deps: [
 				'underscore',
