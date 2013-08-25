@@ -1,10 +1,7 @@
-﻿using System.Net;
-using ShoppingCartDemo.Model;
-using System;
-using System.Collections.Generic;
+﻿using ShoppingCartDemo.Model;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Web.Http;
 
 namespace ShoppingCart.WebApi.SelfHost
@@ -15,7 +12,7 @@ namespace ShoppingCart.WebApi.SelfHost
 
         public ShoppingCartController()
         {
-            Cart = new ShoppingBasket {DeliveryAddress = "Highway to hell", IsFinish = false};
+            Cart = new ShoppingBasket { DeliveryAddress = "Highway to hell", IsFinish = false };
             Cart.AddItem(new BasketItem
                 {
                     ProductId = 2,
