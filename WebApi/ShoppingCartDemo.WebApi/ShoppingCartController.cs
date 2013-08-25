@@ -43,7 +43,7 @@ namespace ShoppingCartDemo.WebApi
             Cart.AddItem(item);
             product.ItemsInStock -= item.Quantity;
 
-            return Request.CreateResponse();
+            return Request.CreateResponse(item);
         }
 
         public HttpResponseMessage Put(BasketItem item)
@@ -68,7 +68,7 @@ namespace ShoppingCartDemo.WebApi
             existing.Quantity = item.Quantity;
             product.ItemsInStock -= diff;
 
-            return Request.CreateResponse();
+            return Request.CreateResponse(item);
         }
     }
 }
