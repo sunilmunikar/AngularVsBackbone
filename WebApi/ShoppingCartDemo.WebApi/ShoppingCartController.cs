@@ -24,7 +24,7 @@ namespace ShoppingCartDemo.WebApi
             return Cart;
         }
 
-        public HttpResponseMessage Post(BasketItem item)
+        public HttpResponseMessage Post([FromBody] BasketItem item)
         {
             if (Cart.Items.Any(i => i.ProductId == item.ProductId))
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict,
