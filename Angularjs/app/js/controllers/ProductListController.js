@@ -1,9 +1,9 @@
-(function () {
+﻿(function () {
     'use strict';
-    angular.module('shoppingCartApp.controllers', [])
+    angular.module('shoppingCartApp.controllers')
         .controller('ProductListController',
-            ['$scope', 'Products', 'MyShoppingBasket',
-                function ($scope, Products, MyShoppingBasket) {
+            ['$scope', 'Notifications', 'Products', 'MyShoppingBasket',
+                function ($scope, Notifications, Products, MyShoppingBasket) {
                     $scope.data = Products;
 
                     Products.getProducts()
@@ -21,9 +21,17 @@
                         MyShoppingBasket.addItemToShoppingCart(product)
                         .then(function () {
                             //success
+                            Notifications.pushForCurrentRoute(
+                                {
+                                    title: "item added", body: "Product sucessfully added", type: "info"
+                                });
                         },
-                        function () {
+                        function (reason) {
                             //error
+                            Notifications.pushForCurrentRoute(
+                                {
+                                    title: "Error", body: reason.data.message, type: "error"
+                                });
                         });
                     };
                     $scope.defineItemColor = function (product) {
@@ -34,10 +42,5 @@
                             return "warning";
                         }
                     }
-                }])
-      .controller('ShoppingBasketController',
-        ['$scope', 'MyShoppingBasket',
-          function ($scope, MyShoppingBasket) {
-              $scope.data = MyShoppingBasket;
-          }]);
+                }]);
 })();

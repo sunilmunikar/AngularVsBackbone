@@ -9,7 +9,8 @@
         'shoppingCartApp.services',
         'shoppingCartApp.directives',
         'shoppingCartApp.controllers',
-        'services.httpRequestTracker'
+        'services.httpRequestTracker',
+        'services.notifications'
         ])
         .config(['$routeProvider', function ($routeProvider) {
             $routeProvider.when('/view1', {
@@ -24,11 +25,19 @@
         }]);
 
     angular.module('shoppingCartApp')
-    .controller('AppCtrl',
-        ['$scope', 'httpRequestTracker', function ($scope, httpRequestTracker) {
-            $scope.config = { debug: true }
-            $scope.hasPendingRequest = function () {
-                return httpRequestTracker.hasPendingRequest();
-            }
-        }]);
+        .controller('AppCtrl',
+            ['$scope', 'Notifications', 'httpRequestTracker',
+                function ($scope, Notifications, httpRequestTracker) {
+                    $scope.config = { debug: true }
+
+                    $scope.notifications = Notifications;
+
+                    $scope.removeNotification = function (notification) {
+                        $scope.notifications.remove(notification);
+                    };
+
+                    $scope.hasPendingRequest = function () {
+                        return httpRequestTracker.hasPendingRequest();
+                    }
+                }]);
 }());

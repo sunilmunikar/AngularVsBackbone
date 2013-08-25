@@ -16,6 +16,9 @@
             </p>
         </div>
         <img src="img/spinner.gif" ng-show="hasPendingRequests()">
+        
+        <div ng-include="'notifications.tpl.html'" class="container-fluid"
+         ng-show="notifications.getCurrent().length"></div>
 
         <div ng-include="'partials/productList.html'" ng-controller="ProductListController"></div>
         <div ng-include="'partials/shoppingBasket.html'" ng-controller="ShoppingBasketController"></div>
@@ -35,9 +38,13 @@
     <script src="lib/angular/angular.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="js/controllers/controllers.js"></script>
+    <script src="js/controllers/ProductListController.js"></script>
+    <script src="js/controllers/ShoppingBasketController.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
-    <script src="js/common/services/httpRequestTracker.js"></script>
+    <script src="js/core/services/httpRequestTracker.js"></script>
+    <script src="js/core/services/exceptionHandler.js"></script>
+    <script src="js/core/services/notifications.js"></script>
 </body>
 </html>

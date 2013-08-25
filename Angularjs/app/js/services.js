@@ -8,7 +8,6 @@ angular.module('shoppingCartApp.services', [])
     .value('baseUrl', 'http://localhost:8765/')
     .factory('Products',
     ['$http', '$q', 'baseUrl', function ($http, $q, baseUrl) {
-
         var _products = [];
 
         var _getProducts = function () {
@@ -37,9 +36,22 @@ angular.module('shoppingCartApp.services', [])
     .factory('MyShoppingBasket',
     ['$http', '$q', 'baseUrl', function ($http, $q, baseUrl) {
 
-        var _productsInCart = [{ id: 1, name: "test" }],
+        var _productsInCart = [],
             _getProductsInMyCart = function () {
-                return _productsInCart;
+                var deferred = $q.defer();
+
+                $http.get(baseUrl + "shoppingcart")
+                    .then(function (result) {
+                        //Successful
+                        //angular.copy(result.data, _products)
+                        deferred.resolve();
+                    },
+                    function () {
+                        //Error
+                        deferred.reject();
+                    });
+
+                return deferred.promise;
             },
             _addItemToShoppingCart = function (newItem) {
                 var deferred = $q.defer();
@@ -50,11 +62,12 @@ angular.module('shoppingCartApp.services', [])
                     _productsInCart.splice(0, 0, newItem);
                     deferred.resolve(newItem);
                 },
-                function (data, status) {
+                function (reason) {
                     //error
-                    console.log(data);
-                    console.log(status);
-                    deferred.reject();
+                    console.log(reason);
+                    console.log(reason.status);
+                    console.log(reason.data.message)
+                    deferred.reject(reason);
                 });
                 return deferred.promise;
             },
@@ -66,6 +79,7 @@ angular.module('shoppingCartApp.services', [])
             };
 
         return {
+            getProductsInMyCart: _getProductsInMyCart,
             productsInMyCart: _productsInCart,
             removeItemFromMyCart: _removeItemFromMyCart,
             clearMyCart: _clearMyCart,
