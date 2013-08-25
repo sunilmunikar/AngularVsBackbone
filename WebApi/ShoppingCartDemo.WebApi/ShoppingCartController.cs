@@ -39,8 +39,34 @@ namespace ShoppingCartDemo.WebApi
             if (product.ItemsInStock == 0)
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Item is no longer in stock");
 
+            item.Id = Cart.Items.Any() ? Cart.Items.Max(i => i.Id) : 100;
             Cart.AddItem(item);
             product.ItemsInStock -= item.Quantity;
+
+            return Request.CreateResponse();
+        }
+
+        public HttpResponseMessage Put(BasketItem item)
+        {
+            var existing = Cart.Items.SingleOrDefault(i => i.Id == item.Id);
+
+            if (existing == null)
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No basketitem found with id " + item.Id);
+
+            if (existing.ProductId != item.ProductId)
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Product in item different than product in request");
+
+            var product = ProductsRepository.Products.FirstOrDefault(p => p.Id == item.ProductId);
+
+            if (product == null)
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "No product found with id " + item.ProductId);
+
+            if (product.ItemsInStock == 0)
+                return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Item is no longer in stock");
+
+            var diff = item.Quantity - existing.Quantity;
+            existing.Quantity = item.Quantity;
+            product.ItemsInStock -= diff;
 
             return Request.CreateResponse();
         }
