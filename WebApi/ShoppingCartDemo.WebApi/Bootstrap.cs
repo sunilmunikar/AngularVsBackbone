@@ -21,6 +21,13 @@ namespace ShoppingCartDemo.WebApi
                     id = RouteParameter.Optional
                 });
 
+            //tell API to use JSON instead of XML
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(
+                config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml"));
+
+            //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
         }
