@@ -1,6 +1,5 @@
 ﻿﻿using System.Net;
-using System.Web;
-using System.Web.Http.Cors;
+﻿using System.Web.Http.Cors;
 using ShoppingCartDemo.Model;
 using System.Linq;
 using System.Net.Http;
@@ -43,7 +42,7 @@ namespace ShoppingCartDemo.WebApi
             Cart.AddItem(item);
             product.ItemsInStock -= item.Quantity;
 
-            return Request.CreateResponse(item);
+            return Request.CreateResponse(HttpStatusCode.Accepted, item);
         }
 
         public HttpResponseMessage Put(BasketItem item)
@@ -68,7 +67,7 @@ namespace ShoppingCartDemo.WebApi
             existing.Quantity = item.Quantity;
             product.ItemsInStock -= diff;
 
-            return Request.CreateResponse(item);
+            return Request.CreateResponse(HttpStatusCode.Accepted, item);
         }
     }
 }
