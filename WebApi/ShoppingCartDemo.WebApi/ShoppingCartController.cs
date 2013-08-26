@@ -1,13 +1,11 @@
 ﻿﻿using System.Net;
-﻿using System.Web.Http.Cors;
-using ShoppingCartDemo.Model;
+﻿using ShoppingCartDemo.Model;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 
 namespace ShoppingCartDemo.WebApi
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ShoppingCartController : ApiController
     {
         public static ShoppingBasket Cart { get; set; }
