@@ -39,7 +39,7 @@ namespace ShoppingCartDemo.WebApi
             if (product.ItemsInStock == 0)
                 return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Item is no longer in stock");
 
-            item.Id = Cart.Items.Any() ? Cart.Items.Max(i => i.Id) : 100;
+            item.Id = Cart.Items.Any() ? Cart.Items.Max(i => i.Id) + 1 : 100;
             Cart.AddItem(item);
             product.ItemsInStock -= item.Quantity;
 

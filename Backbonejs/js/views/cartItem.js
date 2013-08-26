@@ -12,34 +12,32 @@
         template: handlebars.compile(template),
         tagName: "li",
 
-        //events: {
-        //    "click .cart-add-button": "addToCart"
-        //},
-
         initialize: function () {
-            this.setModel();
+            if (!this.product) {
+                this.extendWithProduct();
+            }
         },
         
-        setModel : function() {
+        extendWithProduct: function () {
             if (products.length == 0) {
                 products.once("add", function () {
-                    this.setModel();
+                    this.extendWithProduct();
                     this.render();
-                });
+                }, this);
             } else {
-                this.model = products.get(this.options.productId);
+                this.product = products.get(this.model.get("productId"));
             }
         },
 
         render: function () {
-            if (!this.model) {
-                return this;
+            var data = this.model.toJSON();
+            
+            if (this.product) {
+                _.extend(data, this.product.toJSON());
             }
 
-            var item = this.model.toJSON();
-
             this.$el
-                .html(this.template(item))
+                .html(this.template(data))
                 .addClass("list-group-item");
                 
             return this;

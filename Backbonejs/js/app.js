@@ -8,6 +8,8 @@
         underscore: "lib/underscore",
         handlebars: "lib/handlebars",
         relational: "lib/relational",
+        notifier: "helpers/notifier",
+        aggregator: "helpers/aggregator"
     },
     shim: {
         underscore: { exports: '_' },

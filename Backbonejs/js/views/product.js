@@ -4,8 +4,9 @@
         "backbone",
         "models/product",
         "models/cart",
-        "text!templates/product.html"
-], function ($, _, backbone, product, cart, template) {
+        "text!templates/product.html",
+        "aggregator"
+], function ($, _, backbone, product, cart, template, aggregator) {
     "use strict";
 
     var masterView = backbone.View.extend({
@@ -33,7 +34,7 @@
         },
         
         addToCart: function() {
-            cart.addProduct(this.model);
+            aggregator.trigger("product:addToCart", this.model);
         }
     });
 
