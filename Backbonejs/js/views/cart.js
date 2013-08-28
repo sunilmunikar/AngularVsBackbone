@@ -61,7 +61,7 @@
         },
 
         addOnSuccess: function (product, model) {
-            product.fetch();
+            aggregator.trigger("cart:productAdded", product);
             notifier.success(product.get("name") + " added to the cart", model.get("productId"));
         },
 
@@ -72,6 +72,8 @@
             } else {
                 notifier.error("An error has occured while adding the product to the cart", model.get("productId"));
             }
+
+            model.fetch();
         }
     });
 

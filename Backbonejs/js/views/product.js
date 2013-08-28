@@ -13,13 +13,15 @@
         template: _.template(template),
         model: product,
         tagName: "tr",
-        
+
         events: {
             "click .cart-add-button": "addToCart"
         },
 
         initialize: function () {
-
+            _.bindAll(this, "addedToCart");
+            aggregator.bind("cart:productAdded", this.addedToCart);
+            this.listenTo(this.model, "change", this.render);
         },
 
         render: function () {
@@ -32,9 +34,15 @@
 
             return this;
         },
-        
-        addToCart: function() {
+
+        addToCart: function () {
             aggregator.trigger("product:addToCart", this.model);
+        },
+
+        addedToCart: function (item) {
+            if (item.id == this.model.id) {
+                this.model.fetch();
+            }
         }
     });
 

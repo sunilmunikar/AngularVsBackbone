@@ -16,6 +16,8 @@
             if (!this.product) {
                 this.extendWithProduct();
             }
+            
+            this.listenTo(this.model, "change", this.render);
         },
         
         extendWithProduct: function () {
