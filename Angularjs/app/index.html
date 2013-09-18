@@ -8,13 +8,13 @@
 </head>
 <body ng-controller="AppCtrl">
     <div class="container">
-        <div class="jumbotron">
+        <!--<div class="jumbotron">
             <h1>Jimmy's Bike Shop</h1>
             <p>
                 Welcome to Jimmy's Bike Shop, a demo application to show the different workings 
                     between <a href="http://angularjs.org/">AngularJS</a> and <a href="http://backbonejs.org">BackBoneJS</a>.
             </p>
-        </div>
+        </div>-->
         <img src="img/spinner.gif" ng-show="hasPendingRequests()">
         
         <div ng-include="'notifications.tpl.html'" class="container-fluid"
@@ -33,7 +33,7 @@
   -->
     <!--<script src="http://code.jquery.com/jquery.js"></script>-->
     <!--<script src="../../js/bootstrap.min.js"></script>-->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.js"></script>
+    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.js"></script>-->
 
     <script src="lib/angular/angular.js"></script>
     <script src="js/app.js"></script>
@@ -46,5 +46,6 @@
     <script src="js/core/services/httpRequestTracker.js"></script>
     <script src="js/core/services/exceptionHandler.js"></script>
     <script src="js/core/services/notifications.js"></script>
+    <script src="lib/lodash.js"></script>
 </body>
 </html>
