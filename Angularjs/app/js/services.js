@@ -1,8 +1,6 @@
 /// <reference path="../lib/angular/angular.js" />
 'use strict';
 
-/* Services */
-
 angular.module('shoppingCartApp.services', [])
     .value('version', '0.1')
     .constant('baseUrl', 'http://localhost:8765/')
@@ -11,29 +9,23 @@ angular.module('shoppingCartApp.services', [])
         var _products = [];
 
         var _getProducts = function () {
-
             var deferred = $q.defer();
 
-            $http.get(baseUrl + "products").then(function (result) {
-                angular.copy(result.data, _products)
-                deferred.resolve();
-            },
+            $http.get(baseUrl + "products").then(
+                function (result) {
+                    angular.copy(result.data, _products);
+                    deferred.resolve();
+                },
                 function () {
                     deferred.reject();
                 });
             return deferred.promise;
-
-            //$http.get(baseUrl + "products").success(function (data) {
-            //    angular.copy(data, _products);
-            //    deferred.resolve(data);
-            //}).error(function () {
-            //    deferred.reject();
-            //});
-            //return deferred.promise;
         };
+
         var _setProducts = function () {
             _products = [];
-        }
+        };
+
         return {
             products: _products,
             setProducts: _setProducts,
@@ -43,17 +35,15 @@ angular.module('shoppingCartApp.services', [])
     .factory('MyShoppingBasket',
     ['$http', '$q', 'baseUrl', 'Products', '$rootScope', function ($http, $q, baseUrl, Products, $rootScope) {
         var _myCart = { products: [], isFinish: false, deliveryAddress: "" },
-            _productsInCart = {},
+            _basketItemsInCart = {},
             _getProductsInMyCart = function () {
                 var deferred = $q.defer();
 
                 $http.get(baseUrl + "ShoppingCart").then(function (result) {
-                    angular.copy(result.data, _productsInCart);
-                    //console.log(_productsInCart);
-
+                    angular.copy(result.data, _basketItemsInCart);
                     $http.get(baseUrl + "products").then(function (result) {
                         var products = result.data;
-                        angular.forEach(_productsInCart.items, function (basketItem) {
+                        angular.forEach(_basketItemsInCart.items, function (basketItem) {
                             basketItem.product = {};
                             angular.forEach(products, function (product) {
                                 if (basketItem.productId == product.id) {
@@ -62,19 +52,40 @@ angular.module('shoppingCartApp.services', [])
                             });
                         });
                     });
-                    deferred.resolve(_productsInCart);
+                    deferred.resolve(_basketItemsInCart);
                     //}).error(function () {
                     //    deferred.reject();
                 });
                 return deferred.promise;
             },
             _addItemToShoppingCart = function (newItem) {
-                $rootScope.$broadcast('productModel::productAdded', newItem);
-
+                //#region Demo event
+                //$rootScope.$broadcast('productModel::productAdded', newItem);
+                //#endregion
                 var deferred = $q.defer();
                 var existingProduct = _findProductInCart(newItem);
-                if (existingProduct !== undefined) {
-                    //put
+                if (existingProduct === undefined) {
+                    //POST
+                    $http.post(baseUrl + "ShoppingCart", { ProductId: newItem.id, Quantity: 1 })
+                        .then(function (result) {
+                            var basketItem = {};
+                            angular.copy(result.data, basketItem);
+
+                            angular.forEach(Products.products, function (product) {
+                                if (newItem.id == product.id) {
+                                    product.itemsInStock = product.itemsInStock - 1;
+                                    basketItem.product = product;
+                                }
+                            });
+                            _basketItemsInCart.items.splice(0, 0, basketItem);
+                            deferred.resolve(newItem);
+                        },
+                        function (reason) {
+                            deferred.reject(reason);
+                        });
+                }
+                else {
+                    //PUT
                     $http.put(baseUrl + "ShoppingCart",
                         {
                             Id: existingProduct.id,
@@ -91,47 +102,29 @@ angular.module('shoppingCartApp.services', [])
                                     newItem.product = product;
                                 }
                             });
-
+                            
                             deferred.resolve(newItem);
                         },
                         function (reason) {
                             deferred.reject(reason);
                         });
                 }
-                else {
-                    //post
-                    $http.post(baseUrl + "ShoppingCart", { ProductId: newItem.id, Quantity: 1 })
-                        .then(function (result) {
-                            angular.forEach(Products.products, function (product) {
-                                if (newItem.id == product.id) {
-                                    product.itemsInStock = product.itemsInStock - 1;
-                                    newItem.product = product;
-                                }
-                            });
-                            _productsInCart.items.splice(0, 0, newItem);
-                            deferred.resolve(newItem);
-                        },
-                        function (reason) {
-                            deferred.reject(reason);
-                        });
-                }
-
                 return deferred.promise;
             },
             _removeItemFromMyCart = function (productToRemove) {
-                _.find(_productsInCart, { 'id': productToRemove.id });
+                _.find(_basketItemsInCart, { 'id': productToRemove.id });
             },
             _clearMyCart = function () {
-                _productsInCart.length = 0;
+                _basketItemsInCart.length = 0;
             };
 
         var _findProductInCart = function (lookFor) {
-            return _.find(_productsInCart.items, { 'productId': lookFor.id });
+            return _.find(_basketItemsInCart.items, { 'productId': lookFor.id });
         };
 
         return {
             getProductsInMyCart: _getProductsInMyCart,
-            productsInMyCart: _productsInCart,
+            productsInMyCart: _basketItemsInCart,
             removeItemFromMyCart: _removeItemFromMyCart,
             clearMyCart: _clearMyCart,
             addItemToShoppingCart: _addItemToShoppingCart
