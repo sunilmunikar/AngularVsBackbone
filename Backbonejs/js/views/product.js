@@ -5,12 +5,13 @@
         "models/product",
         "models/cart",
         "text!templates/product.html",
-        "aggregator"
-], function ($, _, backbone, product, cart, template, aggregator) {
+        "aggregator",
+        "handlebars"
+], function ($, _, backbone, product, cart, template, aggregator, handlebars) {
     "use strict";
 
     var masterView = backbone.View.extend({
-        template: _.template(template),
+        template: handlebars.compile(template),
         model: product,
         tagName: "tr",
 
