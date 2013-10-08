@@ -11,9 +11,10 @@
 
     var masterView = backbone.View.extend({
         template: _.template(productsTemplate),
-        
+        model: products,
         initialize: function () {
             this.listenTo(products, "add", this.addProduct);
+            this.model.fetch();
         },
 
         render: function () {

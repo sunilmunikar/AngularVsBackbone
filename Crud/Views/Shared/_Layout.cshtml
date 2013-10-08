@@ -1,0 +1,53 @@
+﻿
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Jimmy's Bike Shop</title>
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css"/>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+    <body>
+        
+        <!-- Container /-->
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Jimmy's Bike Shop</h1>
+                <p>Welcome to Jimmy's Bike Shop.</p>
+            </div>
+            <div class="col-lg-8">
+                @RenderBody()
+            </div>
+            <div class="col-lg-4">
+                <h2>My shopping cart</h2>
+                <form action="#" method="POST">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Mongoose Stasis Comp 26-Inch Full Suspension Mountain Bicycle</h4>
+                            <p class="list-group-item-text">€ 299,99</p>
+                            <p class="list-group-item-text"><a href="#">Remove from cart</a></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Powerlite Brawler 20-Inch Freestyle Bicycle, Neon Green</h4>
+                            <p class="list-group-item-text">€ 156,71</p>
+                            <p class="list-group-item-text"><a href="#">Remove from cart</a></p>
+                        </li>
+                    </ul>
+                    <p>
+                        <input type="text" class="form-control" placeholder="Delivery location" />
+                    </p>
+                    <div>
+                        <button class="btn btn-primary">Buy articles</button>
+                        <button class="btn btn-danger">Clear cart</button>
+                    </div>
+                </form>
+            </div>
+        </div>       
+        
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

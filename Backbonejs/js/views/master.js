@@ -14,8 +14,6 @@
 
         initialize: function () {
             this.productsView = new productsView();
-            
-            products.fetch();
 
             this.cartView = new cartView();
         },
