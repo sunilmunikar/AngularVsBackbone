@@ -3,7 +3,7 @@
 angular.module('services.notifications', [])
 
 angular.module('services.notifications')
-    .factory('Notifications', ['$rootScope', function ($rootScope) {
+    .factory('Notifications', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
         var notifications = {
             'ROUTE_CURRENT' : [],
             'ROUTE_NEXT' : []
@@ -19,25 +19,27 @@ angular.module('services.notifications')
             notifications.ROUTE_NEXT.length = 0;
         });
 
-        var addNotification = function (notificationsArray, notificationObj) {
+        var addNotification = function(notificationsArray, notificationObj) {
             if (!angular.isObject(notificationObj)) {
                 throw new Error("Only object can be added to the notification service");
             }
             notificationsArray.push(notificationObj);
             return notificationObj;
-        }
+        };
 
-        notificationsService.getCurrent = function () {
+        notificationsService.getCurrent = function() {
             return notifications.ROUTE_CURRENT;
-        }
+        };
 
-        notificationsService.pushForCurrentRoute = function(notification){
+        notificationsService.pushForCurrentRoute = function(notification) {
+            closeAlert(2000);
+
             return addNotification(notifications.ROUTE_CURRENT, notification);
-        }
+        };
 
-        notificationsService.pushForNextRoute = function (notification) {
+        notificationsService.pushForNextRoute = function(notification) {
             return addNotification(notifications.ROUTE_NEXT, notification);
-        }
+        };
 
         notificationsService.remove = function(notification){
             angular.forEach(notifications, function (notificationsByType) {
@@ -52,6 +54,12 @@ angular.module('services.notifications')
             angular.forEach(notifications, function (notificationsByType) {
                 notificationsByType.length = 0;
             });
+        };
+        
+        var closeAlert = function closeAlertFn(delay) {
+            $timeout(function () {
+                notificationsService.removeAll();
+            }, delay * 1);
         };
 
         return notificationsService;

@@ -1,6 +1,5 @@
 /// <reference path="../lib/angular/angular.js" />
 (function () {
-
     'use strict';
 
     angular.module('shoppingCartApp',
@@ -26,9 +25,9 @@
 
     angular.module('shoppingCartApp')
         .controller('AppCtrl',
-            ['$scope', 'Notifications', 'httpRequestTracker',
-                function ($scope, Notifications, httpRequestTracker) {
-                    $scope.config = { debug: true }
+            ['$scope', 'Notifications', 'httpRequestTracker', '$timeout',
+                function ($scope, Notifications, httpRequestTracker, $timeout) {
+                    $scope.config = { debug: true };
 
                     $scope.notifications = Notifications;
 
@@ -38,6 +37,6 @@
 
                     $scope.hasPendingRequest = function () {
                         return httpRequestTracker.hasPendingRequest();
-                    }
+                    };
                 }]);
 }());
